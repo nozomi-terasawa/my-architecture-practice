@@ -1,6 +1,9 @@
 package com.example.data
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserModelRepositoryImpl @Inject constructor() : UserModelRepository{
@@ -35,11 +38,16 @@ class UserModelRepositoryImpl @Inject constructor() : UserModelRepository{
         )
     )
 
-    override fun getUserById(id: Long): UserModel? {
-        return allUserItem.value.firstOrNull { it.id == id }
+    override fun getUserById(id: Long): Flow<UserModel> {
+        return allUserItem
+            .map { it ->
+            it.first { it.id == id }
+        }
+            .distinctUntilChanged() // 連続して同じ UserModelが流れるのを防ぐ
     }
 
-    override fun getAllUsers(): List<UserModel> {
-        return allUserItem.value
+
+    override fun getAllUsers(): Flow<List<UserModel>> {
+        return allUserItem
     }
 }

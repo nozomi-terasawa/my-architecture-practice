@@ -1,7 +1,9 @@
 package com.example.data
 
-interface UserModelRepository {
-    fun getUserById(id: Long): UserModel?
+import kotlinx.coroutines.flow.Flow
 
-    fun getAllUsers(): List<UserModel>
+interface UserModelRepository {
+    fun getUserById(id: Long): Flow<UserModel>
+
+    fun getAllUsers(): Flow<List<UserModel>>
 }

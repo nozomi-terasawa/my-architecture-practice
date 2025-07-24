@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "MyArchitectureSamples"
 include(":app")
 include(":data")
+include(":feature:homelist")
+include(":ui")
