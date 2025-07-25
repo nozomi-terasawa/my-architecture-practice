@@ -12,29 +12,29 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeListViewModel @Inject constructor(
-    private val userModelRepository: UserModelRepository
-) : ViewModel() {
-
-    // TODO ここから、処理をよく見ること
-    val homeListUiState: StateFlow<HomeListUiState> =
-        userModelRepository
-            .getAllUsers()
-            .map<List<UserModel>, HomeListUiState> { userModelList ->
-                HomeListUiState.Success(
-                    userModelList.map { user ->
-                        UserModelUiState(
-                            id = user.id,
-                            name = user.name,
-                            email = user.email,
-                            isActive = user.isActive
-                        )
-                    }
+class HomeListViewModel
+    @Inject
+    constructor(
+        private val userModelRepository: UserModelRepository,
+    ) : ViewModel() {
+        // TODO ここから、処理をよく見ること
+        val homeListUiState: StateFlow<HomeListUiState> =
+            userModelRepository
+                .getAllUsers()
+                .map<List<UserModel>, HomeListUiState> { userModelList ->
+                    HomeListUiState.Success(
+                        userModelList.map { user ->
+                            UserModelUiState(
+                                id = user.id,
+                                name = user.name,
+                                email = user.email,
+                                isActive = user.isActive,
+                            )
+                        },
+                    )
+                }.stateIn(
+                    viewModelScope,
+                    SharingStarted.WhileSubscribed(5000),
+                    HomeListUiState.Loading,
                 )
-            }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5000),
-                HomeListUiState.Loading
-            )
-}
+    }

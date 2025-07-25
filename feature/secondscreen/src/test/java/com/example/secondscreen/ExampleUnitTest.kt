@@ -1,4 +1,4 @@
-package com.example.myarchitecturesamples
+package com.example.secondscreen
 
 import org.junit.Assert.*
 import org.junit.Test

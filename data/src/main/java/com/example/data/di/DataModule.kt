@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {
-
     // Todo 間違えてる？
 //    @Binds
 //    abstract fun bindUserModelRepository(
@@ -20,7 +19,5 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindUserModelRepository(
-        impl : UserModelRepositoryImpl
-    ): UserModelRepository
+    abstract fun bindUserModelRepository(impl: UserModelRepositoryImpl): UserModelRepository
 }
