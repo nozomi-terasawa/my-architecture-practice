@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.myarchitecturesamples"
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
